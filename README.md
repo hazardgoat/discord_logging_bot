@@ -1,4 +1,4 @@
-# discord_logging_bot
+# Discord Logging Bot
 This Discord bot logs the number of times the "log" command has been called per user, and is able to display line plots of user trends, as well as a leaderboard.
 
 Prefix: `?`
