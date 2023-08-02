@@ -13,7 +13,7 @@ intents.messages = True
 intents.message_content = True
 bot = commands.Bot(command_prefix='?', intents=intents)
 
-token = 'SOME BOT TOKEN'
+token = "SOME BOT TOKEN"
 
 log_path = r"\some\logfile\path\log.csv"
 
@@ -23,7 +23,7 @@ async def on_ready():
     """
     Prints message to terminal confirming bot online
     """
-    print(f'We have logged in as {bot.user}')
+    print(f"We have logged in as {bot.user}")
 
 
 @bot.command(name='log')
@@ -66,7 +66,7 @@ async def logme(ctx):
 
     log_df.to_csv(log_path, index=False)
 
-    await ctx.send(f'Hi {ctx.author.mention}, you have logged {total_count} entries and are %{percent_houses} of the way to home ownership!')
+    await ctx.send(f"Hi {ctx.author.mention}, you have logged {total_count} entries and are %{percent_houses} of the way to home ownership!")
 
 
 @bot.command(name='chart')
@@ -105,11 +105,11 @@ async def chartme(ctx):
         sns.lineplot(data=user_history_df, x="Day", y="Count", hue="Data Range")
 
         plt.tight_layout()
-        plt.savefig('chart.png')
+        plt.savefig("chart.png")
 
-        await ctx.send(file=discord.File('chart.png'))
+        await ctx.send(file=discord.File("chart.png"))
         
-        os.remove('chart.png')  # delete the file after sending it
+        os.remove("chart.png")  # delete the file after sending it
         plt.clf()
     else:
         await ctx.send(f"I'm sorry; there is no data yet for {ctx.author.mention}.")
