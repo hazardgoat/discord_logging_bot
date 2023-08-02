@@ -13,6 +13,8 @@ intents.messages = True
 intents.message_content = True
 bot = commands.Bot(command_prefix='?', intents=intents)
 
+token = 'SOME BOT TOKEN'
+
 log_path = r"\some\logfile\path\log.csv"
 
 
@@ -134,17 +136,20 @@ async def leaderboard(ctx, today: str = None):
         else:
             leader_df = log_df.groupby('ID').agg({'Count': 'sum', 'HomesOwned': 'max'}).reset_index()
 
-        leader_df = leader_df.sort_values(by='Count', ascending=False)
+        if len(leader_df) < 1:
+            await ctx.send(f"I'm sorry; there is no data for today yet.")
+        else:
+            leader_df = leader_df.sort_values(by='Count', ascending=False)
 
-        message = f""
-        for idx, row in leader_df.iterrows():
-            user = await bot.fetch_user(row.ID)
-            text = f"{user.name}: {row.Count} entries, {round(row.HomesOwned, 3)} homes built\n"
-            message = message + text
+            message = f""
+            for idx, row in leader_df.iterrows():
+                user = await bot.fetch_user(row.ID)
+                text = f"{idx + 1}) {user.name}   |   {row.Count} entries   |   {round(row.HomesOwned, 3)} homes built\n"
+                message = message + text
         
         await ctx.send(message)
     else:
         await ctx.send(f"I'm sorry; there is no data yet.")
 
 
-bot.run('SOME BOT TOKEN')
+bot.run(token)
